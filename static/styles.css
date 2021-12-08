@@ -1,0 +1,28 @@
+body {
+  background-color: rgb(207, 227, 243);
+  height: 100%;
+  font-family: "Lato";
+  color: #333;
+}
+
+.fancy-font {
+  font-family: "Anton";
+}
+
+.text-main {
+  color: rgb(133, 140, 233);
+}
+
+.btn-main, .btn-main:visited {
+  background-color: #6E3CBC !important;
+  border-color: #6E3CBC !important;
+  color: white;
+}
+.btn-main:hover, .btn-main:active {
+  background-color: #7267CB !important;
+  border-color: #7267CB !important;
+  color: white;
+}
+.content {
+  max-width: 600px;
+}
