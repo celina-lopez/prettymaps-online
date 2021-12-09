@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container py-5 mb-3 content" x-data="{}">
+  <div class="text-end mb-4">
+    <div style="font-size: 2em; cursor: pointer;" x-on:click="location.href='https://github.com/czhu12/forever-free-cloud-app-starter'">
+      <i class="fab fa-github"></i>
+    </div>
+  </div>
+  <div class="text-center mb-4">
+    <div class="h1 text-center fancy-font">
+      PRETTYMAPS <span class="text-main">ONLINE</span>
+    </div>
+    <i>Made with prettymaps + forever free cloud app starter</i>
+  </div>
+
+  <div class="d-grid gap-2">
+    <h3>Themes</h3>
+    <div class="row">
+      <div class="col-3">
+        kawaii pink<br/>
+        <img src="/static/kawaii.png" height="100" />
+      </div>
+      <div class="col-3">
+        lemoncello yellow<br/>
+        <img src="/static/lemoncello.png" height="100" />
+      </div>
+      <div class="col-3">
+        blue dabadi daba<br/>
+        <img src="/static/electric.png" height="100" />
+      </div>
+      <div class="col-3">
+        cafe dream<br/>
+        <img src="/static/cafe.png" height="100" />
+      </div>
+      <div class="col-3">
+        yellowgreen!<br/>
+        <img src="/static/yellowgreen.png" height="100" />
+      </div>
+      <div class="col-3">
+        grape soda<br/>
+        <img src="/static/three.png" height="100" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-copyright text-center py-3">
+  <i>This was built with <a target="_blank" href="https://forever-free-cloud-app-starter.chriszhu.me/">Forever-Free Cloud App Starter</a></i>
+</div>
+
+
+{% endblock %}

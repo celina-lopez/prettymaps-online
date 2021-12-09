@@ -27,6 +27,10 @@ async def index(request: Request):
             "readme": mistune.html(readme_content)
         })
 
+@app.get("/examples")
+async def examples(request: Request):
+  return templates.TemplateResponse("examples.html", {"request": request})
+
 @app.get('/api/')
 async def api(x: Optional[float] = None, y: Optional[float] = None, name: Optional[str] = None, theme_num: Optional[int] = 0):
     report = mapit.get_image(x, y, name, theme_num)

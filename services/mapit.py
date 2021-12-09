@@ -67,7 +67,7 @@ def get_image(x, y, name, theme_num):
 
     # Plot
     layers = plot(
-        (x , y), radius = 100,
+        (x , y), radius = 500,
         ax = ax,
         layers = {
             'perimeter': {'circle': False, 'dilate': dilate},
@@ -98,7 +98,7 @@ def get_image(x, y, name, theme_num):
             },
         },
         drawing_kwargs = theme[theme_num],
-        osm_credit = {'x': 0, 'y': 0, 'color': '#fff'}
+        osm_credit = {'x': 0.02, 'y': 0.01, 'color': '#2F3737'}
     )
 
     # Set bounds

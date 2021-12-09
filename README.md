@@ -1,1 +1,1 @@
-WIP
+A Simple UI to create prettymaps! 
