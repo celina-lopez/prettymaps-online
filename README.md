@@ -6,7 +6,8 @@
 
 ---
 
-<p align="center"> [Marceloprates' prettymaps](https://github.com/marceloprates/prettymaps) online
+<p align="center"> 
+  <a href="https://github.com/marceloprates/prettymaps">Marceloprates' prettymaps </a> online
     <br> 
 </p>
 
