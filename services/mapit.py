@@ -123,7 +123,7 @@ def get_image(x, y, name, theme_num):
 
     return image_string.decode('utf8')
 
-def get_image(
+def get_advanced_image(
   x,
   y,
   name,

@@ -22,6 +22,10 @@ templates = Jinja2Templates(directory="templates")
 async def index(request: Request):
   return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/advanced")
+async def advanced(request: Request):
+  return templates.TemplateResponse("advanced.html", {"request": request})
+
 @app.get("/examples")
 async def examples(request: Request):
   return templates.TemplateResponse("examples.html", {"request": request})
@@ -37,6 +41,33 @@ async def documentation(request: Request):
 @app.get('/api/')
 async def api(x: Optional[float] = None, y: Optional[float] = None, name: Optional[str] = None, theme_num: Optional[int] = 0):
     report = mapit.get_image(x, y, name, theme_num)
+
+    return report
+
+@app.get('/advanced_api/')
+async def advanced_api(
+  x: Optional[float] = None,
+  y: Optional[float] = None,
+  name: Optional[str] = None,
+  dilate: Optional[int] = 100,
+  figx: Optional[int] = 10,
+  figy: Optional[int] = 10,
+  radius: Optional[int] = 500,
+  backgroundFc: Optional[str] = '#E4FBFF',
+  backgroundEc: Optional[str] = '#E4FBFF',
+  greenFc: Optional[str] = '#CCFFBD',
+  greenEc: Optional[str] = '#7ECA9C',
+  waterFc: Optional[str] = '#a8e1e6', 
+  waterEc: Optional[str] = '#2F3737',
+  streetsFc: Optional[str] = '#C400FF',
+  streetsEc: Optional[str] = '#FF67E7',
+  buildingA: Optional[str] = '#7C83FD',
+  buildingB: Optional[str] = '#78DEC7',
+  buildingEc: Optional[str] = '#480032',
+  textColor: Optional[str] = '#2F3737'):
+    report = mapit.get_advanced_image(x, y, name, dilate, figx, figy, radius,
+    backgroundFc, backgroundEc, greenFc, greenEc, waterFc, waterEc, streetsFc,
+    streetsEc, buildingA, buildingB, buildingEc, textColor)
 
     return report
 
