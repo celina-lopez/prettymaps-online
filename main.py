@@ -20,17 +20,20 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def index(request: Request):
-    with open('README.md', 'r') as readme:
-        readme_content = readme.read()
-        return templates.TemplateResponse("index.html", {
-            "request": request,
-            "readme": mistune.html(readme_content)
-        })
+  return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/examples")
 async def examples(request: Request):
   return templates.TemplateResponse("examples.html", {"request": request})
 
+@app.get("/documentation")
+async def documentation(request: Request):
+    with open('README.md', 'r') as readme:
+        readme_content = readme.read()
+        return templates.TemplateResponse("documentation.html", {
+            "request": request,
+            "readme": mistune.html(readme_content)
+        })
 @app.get('/api/')
 async def api(x: Optional[float] = None, y: Optional[float] = None, name: Optional[str] = None, theme_num: Optional[int] = 0):
     report = mapit.get_image(x, y, name, theme_num)

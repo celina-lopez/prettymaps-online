@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container py-5 mb-3 content" x-data="{}">
+  <div class="text-end mb-4">
+    <div style="font-size: 2em; cursor: pointer;" x-on:click="location.href='https://github.com/celina-lopez/prettymaps-online'">
+      <i class="fab fa-github"></i>
+    </div>
+  </div>
+  <div class="text-center mb-4">
+    <div class="h1 text-center fancy-font">
+      PRETTYMAPS <span class="text-main">ONLINE</span>
+    </div>
+    <i>Made with prettymaps + forever free cloud app starter</i>
+  </div>
+
+  <div class="d-grid gap-2">
+  
+    <div class="row">
+      <div class="col-md-6">
+        <label for="xCoord">x</label>
+        <input type="number" name="x" step="any" class="form-control" id="x" placeholder="37.7767135">
+      </div>
+      <div class="col-md-6">
+        <label for="yCoord">y</label>
+        <input type="number" name="y" step="any" class="form-control" id="y" placeholder="-122.4353989">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>title</label>
+        <input type="text" class="form-control" id="name" placeholder="Painted Ladies">
+      </div>
+      <div class="col-md-6">
+        <label>text color</label>
+        <input type="color" class="form-control" id="textColor" value="#2F3737">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>dilate</label>
+        <input type="number" class="form-control" id="dilate" placeholder="100" >
+      </div>
+      <div class="col-md-3">
+        <label>radius</label>
+        <input type="number" class="form-control" id="radius" placeholder="500" >
+      </div>
+      <div class="col-md-3">
+        <label for="figx">fig x</label>
+        <input type="number" class="form-control" id="figx" placeholder="10">
+      </div>
+      <div class="col-md-3">
+        <label for="figy">fig y</label>
+        <input type="number" class="form-control" id="figy" placeholder="10">
+      </div>
+    </div>
+    Background
+    <div class="row">
+      <div class="col-md-6">
+        <label>FC</label>
+        <input type="colr" class="form-control" id="backgroundFc" value="#E4FBFF">
+      </div>
+      <div class="col-md-6">
+        <label>EC</label>
+        <input type="color" class="form-control" id="backgroundEc" value="#E4FBFF">
+      </div>
+    </div>
+    Green
+    <div class="row">
+      <div class="col-md-6">
+        <label>FC</label>
+        <input type="colr" class="form-control" id="greenFc" value="#CCFFBD">
+      </div>
+      <div class="col-md-6">
+        <label>EC</label>
+        <input type="color" class="form-control" id="greenFc" value="#7ECA9C">
+      </div>
+    </div>
+    Water
+    <div class="row">
+      <div class="col-md-6">
+        <label>FC</label>
+        <input type="colr" class="form-control" id="greenFc" value="#a8e1e6">
+      </div>
+      <div class="col-md-6">
+        <label>EC</label>
+        <input type="color" class="form-control" id="greenFc" value="#2F3737">
+      </div>
+    </div>
+    Streets
+    <div class="row">
+      <div class="col-md-6">
+        <label>FC</label>
+        <input type="colr" class="form-control" id="streetsFc" value="#C400FF">
+      </div>
+      <div class="col-md-6">
+        <label>EC</label>
+        <input type="color" class="form-control" id="streetsEc" value="#FF67E7">
+      </div>
+    </div>
+    Buildings
+    <div class="row">
+      <div class="col-md-4">
+        <label>A</label>
+        <input type="colr" class="form-control" id="buildingA" value="#7C83FD">
+      </div>
+      <div class="col-md-4">
+        <label>B</label>
+        <input type="color" class="form-control" id="buildingB" value="#78DEC7">
+      </div>
+      <div class="col-md-4">
+        <label>B</label>
+        <input type="color" class="form-control" id="buildingEc" value="#480032">
+      </div>
+    </div>
+
+
+    <button id="urlSubmit" class="btn btn-main btn-lg btn-block">
+      Generate Image
+    </button>
+    <div class="row justify-content-center mt-3">
+      <div class="col-auto">
+        <div id="display" style="max-width: 500px;">
+          <img src="" id="imgHere" width="500" class="rounded" />
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border d-none" id="imageSpinner" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-copyright text-center py-3">
+  <i>This was built with <a target="_blank" href="https://forever-free-cloud-app-starter.chriszhu.me/">Forever-Free Cloud App Starter</a></i>
+</div>
+
+<script>
+  function mapForm(query, id){
+    return query + "&" + id + "=" + document.getElementById(id).value
+  }
+
+  document.getElementById("urlSubmit").addEventListener("click", function () {
+    document.getElementById("imageSpinner").setAttribute("class", "spinner-border")
+    let request = new XMLHttpRequest();
+    queryString = "?name=" + document.getElementById("name").value;
+    ["x", "y", "dilate", "figx", "figy", "radius", "backgroundFc",
+    "backgroundEc", "greenFc", "greenEc", "waterFc", "waterEc",
+    "streetsFc", "streetsEc", "buildingA", "buildingB", "buildingEc",
+    "textColor"].forEach((value) => {
+      queryString = mapForm(queryString, value)
+    })
+    request.open('GET', "/api" + queryString);
+    request.responseType = 'text';
+    request.onload = function() {
+      const text = request.response.slice(1, -1);
+      document.getElementById("imgHere").setAttribute("src", "data:image/png;base64," + text);
+      document.getElementById("imageSpinner").setAttribute("class", "spinner-border d-none");
+    };
+    request.send()
+  });
+
+</script>
+
+
+{% endblock %}
