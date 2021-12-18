@@ -1,12 +1,11 @@
 <p align="center">
-  
-  ![Prettymaps online!](https://user-images.githubusercontent.com/57647158/145342544-ac012d06-bd11-44ca-8de9-62140a593e69.png)
-  
+  <img src="https://user-images.githubusercontent.com/57647158/145349592-d371953c-68d9-4ebd-9b15-857178b0ca16.png" height="400" align="center">
+
 </p>
 
----
 
-<p align="center"> [Marceloprates' prettymaps](https://github.com/marceloprates/prettymaps) online
+<p align="center"> 
+  <a href="https://github.com/marceloprates/prettymaps">Marceloprates' prettymaps </a> online
     <br> 
 </p>
 
