@@ -152,7 +152,7 @@
     "textColor"].forEach((value) => {
       queryString = mapForm(queryString, value)
     })
-    request.open('GET', "/api" + queryString);
+    request.open('GET', "/advanced_api" + queryString);
     request.responseType = 'text';
     request.onload = function() {
       const text = request.response.slice(1, -1);
