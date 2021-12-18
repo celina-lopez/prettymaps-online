@@ -47,8 +47,6 @@ async def api(x: Optional[float] = None, y: Optional[float] = None, name: Option
 
 @app.get('/advanced_api/')
 async def advanced_api(
-  request: Request,
-  response: Response,
   x: Optional[float] = None,
   y: Optional[float] = None,
   name: Optional[str] = "",
@@ -68,16 +66,11 @@ async def advanced_api(
   buildingB: Optional[str] = '#78DEC7',
   buildingEc: Optional[str] = '#480032',
   textColor: Optional[str] = '#2F3737'):
-    print("hello")
-    print(response)
     report = mapit.get_advanced_image(x, y, name, dilate, figx, figy, radius,
     backgroundFc, backgroundEc, greenFc, greenEc, waterFc, waterEc, streetsFc,
     streetsEc, buildingA, buildingB, buildingEc, textColor)
 
-    return templates.TemplateResponse("pert.html", {
-            "map": report,
-            "request": request,
-        })
+    return report
 
 if __name__ == "__main__":
     load_dotenv()
