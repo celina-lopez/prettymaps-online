@@ -1,6 +1,6 @@
 import os
 import uvicorn
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Response
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -47,9 +47,11 @@ async def api(x: Optional[float] = None, y: Optional[float] = None, name: Option
 
 @app.get('/advanced_api/')
 async def advanced_api(
+  request: Request,
+  response: Response,
   x: Optional[float] = None,
   y: Optional[float] = None,
-  name: Optional[str] = None,
+  name: Optional[str] = "",
   dilate: Optional[int] = 100,
   figx: Optional[int] = 10,
   figy: Optional[int] = 10,
@@ -66,11 +68,16 @@ async def advanced_api(
   buildingB: Optional[str] = '#78DEC7',
   buildingEc: Optional[str] = '#480032',
   textColor: Optional[str] = '#2F3737'):
+    print("hello")
+    print(response)
     report = mapit.get_advanced_image(x, y, name, dilate, figx, figy, radius,
     backgroundFc, backgroundEc, greenFc, greenEc, waterFc, waterEc, streetsFc,
     streetsEc, buildingA, buildingB, buildingEc, textColor)
 
-    return report
+    return templates.TemplateResponse("pert.html", {
+            "map": report,
+            "request": request,
+        })
 
 if __name__ == "__main__":
     load_dotenv()

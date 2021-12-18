@@ -73,18 +73,18 @@
       </div>
       <div class="col-md-6">
         <label>EC</label>
-        <input type="color" class="form-control" id="greenFc" value="#7ECA9C">
+        <input type="color" class="form-control" id="greenEc" value="#7ECA9C">
       </div>
     </div>
     Water
     <div class="row">
       <div class="col-md-6">
         <label>FC</label>
-        <input type="color" class="form-control" id="greenFc" value="#a8e1e6">
+        <input type="color" class="form-control" id="waterFc" value="#a8e1e6">
       </div>
       <div class="col-md-6">
         <label>EC</label>
-        <input type="color" class="form-control" id="greenFc" value="#2F3737">
+        <input type="color" class="form-control" id="waterFc" value="#2F3737">
       </div>
     </div>
     Streets
@@ -139,7 +139,7 @@
 
 <script>
   function mapForm(query, id){
-    return query + "&" + id + "=" + document.getElementById(id).value
+    if (document.getElementById(id).value) return query + "&" + id + "=" + document.getElementById(id).value
   }
 
   document.getElementById("urlSubmit").addEventListener("click", function () {

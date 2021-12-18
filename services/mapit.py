@@ -126,7 +126,7 @@ def get_image(x, y, name, theme_num):
 def get_advanced_image(
   x,
   y,
-  name,
+  name="",
   dilate=100,
   figx=10,
   figy=10,
