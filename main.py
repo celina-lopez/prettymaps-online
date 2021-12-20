@@ -10,6 +10,29 @@ import mistune
 from dotenv import load_dotenv
 from services import mapit
 from typing import Optional
+import sys
+
+class Map(BaseModel):
+    x: float
+    y: float
+    name: Optional[str] = None
+    dilate: Optional[int] = 100
+    figx: Optional[int] = 10
+    figy: Optional[int] = 10
+    radius: Optional[int] = 500
+    backgroundFc: Optional[str] = '#E4FBFF'
+    backgroundEc: Optional[str] = '#E4FBFF'
+    greenFc: Optional[str] = '#CCFFBD'
+    greenEc: Optional[str] = '#7ECA9C'
+    waterFc: Optional[str] = '#a8e1e6' 
+    waterEc: Optional[str] = '#2F3737'
+    streetsFc: Optional[str] = '#C400FF'
+    streetsEc: Optional[str] = '#FF67E7'
+    buildingA: Optional[str] = '#7C83FD'
+    buildingB: Optional[str] = '#78DEC7'
+    buildingEc: Optional[str] = '#480032'
+    textColor: Optional[str] = '#2F3737'
+
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -45,31 +68,29 @@ async def api(x: Optional[float] = None, y: Optional[float] = None, name: Option
 
     return report
 
-@app.get('/advanced_api/')
-async def advanced_api(
-  x: Optional[float] = None,
-  y: Optional[float] = None,
-  name: Optional[str] = "",
-  dilate: Optional[int] = 100,
-  figx: Optional[int] = 10,
-  figy: Optional[int] = 10,
-  radius: Optional[int] = 500,
-  backgroundFc: Optional[str] = '#E4FBFF',
-  backgroundEc: Optional[str] = '#E4FBFF',
-  greenFc: Optional[str] = '#CCFFBD',
-  greenEc: Optional[str] = '#7ECA9C',
-  waterFc: Optional[str] = '#a8e1e6', 
-  waterEc: Optional[str] = '#2F3737',
-  streetsFc: Optional[str] = '#C400FF',
-  streetsEc: Optional[str] = '#FF67E7',
-  buildingA: Optional[str] = '#7C83FD',
-  buildingB: Optional[str] = '#78DEC7',
-  buildingEc: Optional[str] = '#480032',
-  textColor: Optional[str] = '#2F3737'):
-    report = mapit.get_advanced_image(x, y, name, dilate, figx, figy, radius,
-    backgroundFc, backgroundEc, greenFc, greenEc, waterFc, waterEc, streetsFc,
-    streetsEc, buildingA, buildingB, buildingEc, textColor)
-
+@app.post('/advanced_api/')
+async def advanced_api(map: Map):
+    map_dict = map.dict()
+    report = mapit.get_advanced_image(
+      map.x,
+      map.y,
+      map.name,
+      map.dilate,
+      map.figx,
+      map.figy,
+      map.radius,
+      map.backgroundFc,
+      map.backgroundEc,
+      map.greenFc,
+      map.greenEc,
+      map.waterFc,
+      map.waterEc,
+      map.streetsFc,
+      map.streetsEc,
+      map.buildingA,
+      map.buildingB,
+      map.buildingEc,
+      map.textColor)
     return report
 
 if __name__ == "__main__":

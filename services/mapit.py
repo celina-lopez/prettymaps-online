@@ -192,19 +192,21 @@ def get_advanced_image(
     )
 
     # Set bounds
-    xmin, ymin, xmax, ymax = layers['perimeter'].bounds
-    dx, dy = xmax-xmin, ymax-ymin
-    ax.set_xlim(xmin-.06*dx, xmax+.06*dx)
-    ax.set_ylim(ymin-.06*dy, ymax+.06*dy)
-
+   
     # Draw left text
-    ax.text(
-        xmin-.06*dx, ymin+.5*dy,
-        name,
-        color = textColor,
-        rotation = 90,
-        fontproperties = fm.FontProperties(fname = './services/PermanentMarker-Regular.ttf', size = 35),
-    )
+    if name:
+        xmin, ymin, xmax, ymax = layers['perimeter'].bounds
+        dx, dy = xmax-xmin, ymax-ymin
+        ax.set_xlim(xmin-.06*dx, xmax+.06*dx)
+        ax.set_ylim(ymin-.06*dy, ymax+.06*dy)
+
+        ax.text(
+            xmin-.06*dx, ymin+.5*dy,
+            name,
+            color = textColor,
+            rotation = 90,
+            fontproperties = fm.FontProperties(fname = './services/PermanentMarker-Regular.ttf', size = 35),
+        )
 
     image = BytesIO()
     plt.savefig(image, format='png')
