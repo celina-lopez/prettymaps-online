@@ -39,19 +39,19 @@
     <div class="row">
       <div class="col-md-3">
         <label>dilate</label>
-        <input type="number" name="dilate" class="form-control" id="dilate" placeholder="100" >
+        <input type="number" name="dilate" class="form-control" id="dilate" placeholder="100" value="100" >
       </div>
       <div class="col-md-3">
         <label>radius</label>
-        <input type="number" name="radius" class="form-control" id="radius" placeholder="500" >
+        <input type="number" name="radius" class="form-control" id="radius" placeholder="500" value="500">
       </div>
       <div class="col-md-3">
         <label for="figx">fig x</label>
-        <input type="number" name="figx" class="form-control" id="figx" placeholder="10">
+        <input type="number" name="figx" class="form-control" id="figx" placeholder="10" value="10">
       </div>
       <div class="col-md-3">
         <label for="figy">fig y</label>
-        <input type="number" name="figy" class="form-control" id="figy" placeholder="10">
+        <input type="number" name="figy" class="form-control" id="figy" placeholder="10" value="10">
       </div>
     </div>
     Background
@@ -113,9 +113,6 @@
         <input type="color" name="buildingEc" class="form-control" id="buildingEc" value="#480032">
       </div>
     </div>
-
-
-    
   </form>
   <button id="urlSubmit" class="btn btn-main btn-lg btn-block">
     Generate Image
@@ -150,10 +147,8 @@
       url: "/advanced_api/",
       data: JSON.stringify(formData),
       success: function(e) {
-        console.log(e)
-      const text = e.slice(1, -1);
-      $("#imgHere").attr("src", "data:image/png;base64," + text);
-      document.getElementById("imageSpinner").setAttribute("class", "spinner-border d-none");
+        $("#imgHere").attr("src", "data:image/png;base64," + e);
+        document.getElementById("imageSpinner").setAttribute("class", "spinner-border d-none");
     },
       dataType: "json",
       contentType : "application/json"
