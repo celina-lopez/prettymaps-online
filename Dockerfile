@@ -1,22 +1,25 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
-RUN mkdir -p /app
+# Install Miniconda
+RUN apt-get update && apt-get install -y wget && \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p /miniconda && \
+    rm Miniconda3-latest-Linux-x86_64.sh
+
+# Set up PATH for conda
+ENV PATH=/miniconda/bin:$PATH
+
+# Create and activate the conda environment
+COPY environment_one.yml /app/environment_one.yml
+RUN conda env create -f /app/environment_one.yml
+
+# Install pip packages if needed (Make sure to use conda-installed pip)
+COPY requirements.txt /app/requirements.txt
+RUN /miniconda/bin/conda run -n one pip install -U -r /app/requirements.txt
+
+# Copy the application code
+COPY . /app
 WORKDIR /app
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-RUN bash Miniconda3-latest-Linux-x86_64.sh -b -p /miniconda
-ENV PATH=$PATH:/miniconda/condabin:/miniconda/bin
-
-# RUN conda env create -f environment_one.yml
-# SHELL ["conda","run","-n","one","/bin/bash","-c"]
-# RUN python -m ipykernel install --name kernel_one --display-name "Display Name One"
-
-COPY requirements.txt /app/requirements.txt
-RUN pip install -U -r requirements.txt
-
-SHELL ["/bin/bash","-c"]
-RUN conda init
-RUN echo 'conda activate one' >> ~/.bashrc
-
-COPY . /app
-CMD PYTHONPATH=/app python main.py
+# Run the application using conda
+CMD ["/miniconda/bin/conda", "run", "--no-capture-output", "-n", "one", "python", "main.py"]
