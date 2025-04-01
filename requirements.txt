@@ -47,9 +47,9 @@ uvicorn==0.14.0
 Pillow
 matplotlib
 numpy
-osmnx
+osmnx>=1.1
 descartes
 tabulate
-shapely
+shapely<2.0
 geopandas
 typing

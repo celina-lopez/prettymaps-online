@@ -20,14 +20,12 @@ import re
 from collections.abc import Iterable
 
 import osmnx as ox
-import pandas as pd
 from geopandas import GeoDataFrame
 import numpy as np
 from numpy.random import choice
-from shapely.geometry import box, Polygon, MultiLineString, GeometryCollection
+from shapely.geometry import box, MultiLineString, GeometryCollection
 from shapely.affinity import translate, scale, rotate
 from descartes import PolygonPatch
-from tabulate import tabulate
 
 from .fetch import get_perimeter, get_layer
 
@@ -78,7 +76,8 @@ def plot_shapes(shapes, ax, vsketch=None, palette=None, **kwargs):
         if palette is None:
             plot_shape(shape, ax, vsketch=vsketch, **kwargs)
         else:
-            plot_shape(shape, ax, vsketch=vsketch, fc=choice(palette), **kwargs)
+            plot_shape(shape, ax, vsketch=vsketch,
+                       fc=choice(palette), **kwargs)
 
 
 # Parse query (by coordinates, OSMId or name)
@@ -149,9 +148,9 @@ def plot(
     rotation=None,
 ):
     """
-    
+
     Draw a map from OpenStreetMap data.
-    
+
     Parameters
     ----------
     query : string
@@ -186,22 +185,23 @@ def plot(
         (Optional) Vertical scale factor
     rotation: float
         (Optional) Rotation in angles (0-360)
-    
+
     Returns
     -------
     layers: dict
         Dictionary of layers (each layer is a Shapely MultiPolygon)
-    
+
     Notes
     -----
-    
+
     """
 
     # Interpret query
     query_mode = parse_query(query)
 
     # Save maximum dilation for later use
-    dilations = [kwargs["dilate"] for kwargs in layers.values() if "dilate" in kwargs]
+    dilations = [kwargs["dilate"]
+                 for kwargs in layers.values() if "dilate" in kwargs]
     max_dilation = max(dilations) if len(dilations) > 0 else 0
 
     ####################
@@ -308,15 +308,18 @@ def plot(
                 else "data © OpenStreetMap contributors\ngithub.com/marceloprates/prettymaps"
             ),
             x=xmin + (osm_credit["x"] * dx if "x" in osm_credit else 0),
-            y=ymax - 4 * d - (osm_credit["y"] * dy if "y" in osm_credit else 0),
+            y=ymax - 4 * d - (osm_credit["y"] *
+                              dy if "y" in osm_credit else 0),
             fontfamily=(
                 osm_credit["fontfamily"]
                 if "fontfamily" in osm_credit
                 else "Ubuntu Mono"
             ),
-            fontsize=(osm_credit["fontsize"] * d if "fontsize" in osm_credit else d),
+            fontsize=(osm_credit["fontsize"] *
+                      d if "fontsize" in osm_credit else d),
             zorder=(
-                osm_credit["zorder"] if "zorder" in osm_credit else len(layers) + 1
+                osm_credit["zorder"] if "zorder" in osm_credit else len(
+                    layers) + 1
             ),
             **{
                 k: v

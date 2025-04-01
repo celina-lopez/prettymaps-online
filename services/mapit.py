@@ -4,8 +4,6 @@
 from .prettymaps import *
 import matplotlib.font_manager as fm
 from matplotlib import pyplot as plt
-from PIL import Image
-import numpy
 from io import BytesIO
 import base64
 
@@ -37,7 +35,7 @@ theme = {
     3: {
         'background': {'fc': '#F2F4CB', 'ec': '#F2F4CB', 'hatch': 'ooo...', 'zorder': -1},
         'perimeter': {'fill': False, 'lw': 0, 'zorder': 0},
-          'green': {'fc': '#8BB174', 'ec': '#2F3737', 'hatch_c': '#A7C497', 'hatch': 'ooo...', 'lw': 1, 'zorder': 1},
+        'green': {'fc': '#8BB174', 'ec': '#2F3737', 'hatch_c': '#A7C497', 'hatch': 'ooo...', 'lw': 1, 'zorder': 1},
         'water': {'fc': '#a8e1e6', 'ec': '#2F3737', 'hatch_c': '#9bc3d4', 'hatch': 'ooo...', 'lw': 1, 'zorder': 3},
         'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 4},
         'building': {'palette': ['#433633', '#FF5E5B'], 'ec': '#2F3737', 'lw': .5, 'zorder': 5},
@@ -60,16 +58,17 @@ theme = {
     }
 }
 
+
 def get_image(x, y, name, theme_num):
     dilate = 100
     # Setup figure
-    fig, ax = plt.subplots(figsize = (10, 10), constrained_layout = True)
+    fig, ax = plt.subplots(figsize=(10, 10), constrained_layout=True)
 
     # Plot
     layers = plot(
-        (x , y), radius = 500,
-        ax = ax,
-        layers = {
+        (x, y), radius=500,
+        ax=ax,
+        layers={
             'perimeter': {'circle': False, 'dilate': dilate},
             'streets': {
                 'width': {
@@ -97,8 +96,8 @@ def get_image(x, y, name, theme_num):
                 'dilate': dilate
             },
         },
-        drawing_kwargs = theme[theme_num],
-        osm_credit = {'x': 0.02, 'y': 0.01, 'color': '#2F3737'}
+        drawing_kwargs=theme[theme_num],
+        osm_credit={'x': 0.02, 'y': 0.01, 'color': '#2F3737'}
     )
 
     # Set bounds
@@ -111,9 +110,10 @@ def get_image(x, y, name, theme_num):
     ax.text(
         xmin-.06*dx, ymin+.5*dy,
         name,
-        color = '#2F3737',
-        rotation = 90,
-        fontproperties = fm.FontProperties(fname = './services/PermanentMarker-Regular.ttf', size = 35),
+        color='#2F3737',
+        rotation=90,
+        fontproperties=fm.FontProperties(
+            fname='./services/PermanentMarker-Regular.ttf', size=35),
     )
 
     image = BytesIO()
@@ -123,36 +123,37 @@ def get_image(x, y, name, theme_num):
 
     return image_string.decode('utf8')
 
+
 def get_advanced_image(
-  x,
-  y,
-  name="",
-  dilate=100,
-  figx=10,
-  figy=10,
-  radius=500,
-  backgroundFc='#E4FBFF',
-  backgroundEc='#E4FBFF',
-  greenFc='#CCFFBD',
-  greenEc='#7ECA9C',
-  waterFc='#a8e1e6', 
-  waterEc='#2F3737',
-  streetsFc='#C400FF',
-  streetsEc='#FF67E7',
-  buildingA='#7C83FD',
-  buildingB='#78DEC7',
-  buildingEc='#480032',
-  textColor='#2F3737',
+    x,
+    y,
+    name="",
+    dilate=100,
+    figx=10,
+    figy=10,
+    radius=500,
+    backgroundFc='#E4FBFF',
+    backgroundEc='#E4FBFF',
+    greenFc='#CCFFBD',
+    greenEc='#7ECA9C',
+    waterFc='#a8e1e6',
+    waterEc='#2F3737',
+    streetsFc='#C400FF',
+    streetsEc='#FF67E7',
+    buildingA='#7C83FD',
+    buildingB='#78DEC7',
+    buildingEc='#480032',
+    textColor='#2F3737',
 ):
     dilate = dilate
     # Setup figure
-    fig, ax = plt.subplots(figsize = (figx, figy), constrained_layout = True)
+    fig, ax = plt.subplots(figsize=(figx, figy), constrained_layout=True)
 
     # Plot
     layers = plot(
-        (x , y), radius = radius,
-        ax = ax,
-        layers = {
+        (x, y), radius=radius,
+        ax=ax,
+        layers={
             'perimeter': {'circle': False, 'dilate': dilate},
             'streets': {
                 'width': {
@@ -180,19 +181,19 @@ def get_advanced_image(
                 'dilate': dilate
             },
         },
-        drawing_kwargs = {
-          'background': {'fc': backgroundFc, 'ec': backgroundEc, 'hatch': 'ooo...', 'zorder': -1},
-          'perimeter': {'fill': False, 'lw': 0, 'zorder': 0},
-          'green': {'fc': greenFc, 'ec': greenEc, 'hatch_c': '#A7C497', 'hatch': 'ooo...', 'lw': 1, 'zorder': 1},
-          'water': {'fc': waterFc, 'ec': waterEc, 'hatch_c': '#9bc3d4', 'hatch': 'ooo...', 'lw': 1, 'zorder': 3},
-          'streets': {'fc': streetsFc, 'ec': streetsEc, 'alpha': 1, 'lw': 0, 'zorder': 4},
-          'building': {'palette': [buildingA, buildingB], 'ec': buildingEc, 'lw': .5, 'zorder': 5},
+        drawing_kwargs={
+            'background': {'fc': backgroundFc, 'ec': backgroundEc, 'hatch': 'ooo...', 'zorder': -1},
+            'perimeter': {'fill': False, 'lw': 0, 'zorder': 0},
+            'green': {'fc': greenFc, 'ec': greenEc, 'hatch_c': '#A7C497', 'hatch': 'ooo...', 'lw': 1, 'zorder': 1},
+            'water': {'fc': waterFc, 'ec': waterEc, 'hatch_c': '#9bc3d4', 'hatch': 'ooo...', 'lw': 1, 'zorder': 3},
+            'streets': {'fc': streetsFc, 'ec': streetsEc, 'alpha': 1, 'lw': 0, 'zorder': 4},
+            'building': {'palette': [buildingA, buildingB], 'ec': buildingEc, 'lw': .5, 'zorder': 5},
         },
-        osm_credit = {'x': 0.02, 'y': 0.01, 'color': '#2F3737'}
+        osm_credit={'x': 0.02, 'y': 0.01, 'color': '#2F3737'}
     )
 
     # Set bounds
-   
+
     # Draw left text
     if name:
         xmin, ymin, xmax, ymax = layers['perimeter'].bounds
@@ -203,9 +204,10 @@ def get_advanced_image(
         ax.text(
             xmin-.06*dx, ymin+.5*dy,
             name,
-            color = textColor,
-            rotation = 90,
-            fontproperties = fm.FontProperties(fname = './services/PermanentMarker-Regular.ttf', size = 35),
+            color=textColor,
+            rotation=90,
+            fontproperties=fm.FontProperties(
+                fname='./services/PermanentMarker-Regular.ttf', size=35),
         )
 
     image = BytesIO()
